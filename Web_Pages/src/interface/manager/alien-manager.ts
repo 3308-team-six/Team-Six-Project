@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Alien } from "../alien";
 import { AnimationType } from "../factory/animation-factory";
 

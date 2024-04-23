@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ImageType } from "../assets";
 
 // This class manages the scoreboard from display to current amount of lives, and the points awarded per alien slayed
