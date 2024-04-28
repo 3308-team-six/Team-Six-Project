@@ -51,35 +51,35 @@ export class MainScene extends Phaser.Scene {
     // This is the preload function in phaser that loads the assets
     preload() {
         // Load images
-        this.load.setBaseURL("/assets");
-        this.load.image(ImageType.Starfield, "/images/starfield.png");
-        this.load.image(ImageType.Haze, "/images/hazyVision.png")
-        this.load.image(ImageType.Bullet, "/images/bullet.png");
-        this.load.image(ImageType.EnemyBullet, "/images/enemy-bullet.png");
-        this.load.image(ImageType.Repair, "/images/repair.png")
-        this.load.image(ImageType.Gas, "/images/gas.png")
-        this.load.image(ImageType.Stealth, "/images/stealth.png")
-        this.load.image(ImageType.Meteor, '/images/meteor.png');
-        this.load.spritesheet(ImageType.Alien, "/images/invader.png", {
+        this.load.setBaseURL("static/assets");
+        this.load.image(ImageType.Starfield, "images/starfield.png");
+        this.load.image(ImageType.Haze, "images/hazyVision.png")
+        this.load.image(ImageType.Bullet, "images/bullet.png");
+        this.load.image(ImageType.EnemyBullet, "images/enemy-bullet.png");
+        this.load.image(ImageType.Repair, "images/repair.png")
+        this.load.image(ImageType.Gas, "images/gas.png")
+        this.load.image(ImageType.Stealth, "images/stealth.png")
+        this.load.image(ImageType.Meteor, 'images/meteor.png');
+        this.load.spritesheet(ImageType.Alien, "images/invader.png", {
             frameWidth: 32,
             frameHeight: 36,
         });
-        this.load.image(ImageType.Ship, "/images/player.png");
-        this.load.spritesheet(ImageType.Explosion, "/images/explode.png", {
+        this.load.image(ImageType.Ship, "images/player.png");
+        this.load.spritesheet(ImageType.Explosion, "images/explode.png", {
             frameWidth: 128,
             frameHeight: 128,
         });
 
         // Load audio
         this.sound.volume = 0.25;
-        this.load.audio(SoundType.Shoot, "/audio/boop.wav");
-        this.load.audio(SoundType.Kaboom, "/audio/boom.wav");
-        this.load.audio(SoundType.PlayerKaboom, "/audio/player_boom.wav");
-        this.load.audio(SoundType.Song, "/audio/boop_song.wav");
-        this.load.audio(SoundType.Gas, "/audio/gas_powerdown.wav");
-        this.load.audio(SoundType.Repair, "/audio/repair_powerup.wav");
-        this.load.audio(SoundType.Stealth, "/audio/stealth_powerup.wav");
-        this.load.audio(SoundType.StealthEnd, "/audio/stealth_powerdown.wav");
+        this.load.audio(SoundType.Shoot, "audio/boop.wav");
+        this.load.audio(SoundType.Kaboom, "audio/boom.wav");
+        this.load.audio(SoundType.PlayerKaboom, "audio/player_boom.wav");
+        this.load.audio(SoundType.Song, "audio/boop_song.wav");
+        this.load.audio(SoundType.Gas, "audio/gas_powerdown.wav");
+        this.load.audio(SoundType.Repair, "audio/repair_powerup.wav");
+        this.load.audio(SoundType.Stealth, "audio/stealth_powerup.wav");
+        this.load.audio(SoundType.StealthEnd, "audio/stealth_powerdown.wav");
     }
 
     // This function sets up the playing field for the game on start
