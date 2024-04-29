@@ -17,6 +17,13 @@
         <a href="/settings" class="btnStack">Setting</a>
     </div>
 
+    <!-- Display Username if Logged In -->
+    {% if session.username %}
+        <div class="welcome-message">
+            Welcome, {{ session.username }}!
+        </div>
+    {% endif %}
+
     <div class="start-game">
         <button>
         <span>Select Game</span>

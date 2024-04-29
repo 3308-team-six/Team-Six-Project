@@ -201,3 +201,19 @@ def check_user_exists(db_filename: str, username: str, email: str) -> bool:
     result = c.fetchone()
     conn.close()
     return result is not None
+
+'''
+Author: Seiji Aoyama
+Last Modified: 4/29/2024
+'''
+def get_user_details(db_filename: str, username: str, email: str):
+    conn = sqlite3.connect(db_filename)
+    c = conn.cursor()
+    query = """
+        SELECT playerID, playerName, playerEmail FROM Players
+        WHERE playerName = ? AND playerEmail = ?
+    """
+    c.execute(query, (username, email))
+    user_details = c.fetchone()
+    conn.close()
+    return user_details

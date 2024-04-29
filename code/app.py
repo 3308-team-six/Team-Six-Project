@@ -1,9 +1,9 @@
 from flask import render_template
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, session, flash
 import dbAPI
 
 app = Flask(__name__)
-
+app.secret_key = 'teamSixKey'
 
 ## You can use the code below for Flask
 
@@ -44,8 +44,14 @@ def signin():
         username = request.form['username']
         email = request.form['email']
         if dbAPI.check_user_exists(db_filename, username, email):
-            return redirect('/')
+            user_details = dbAPI.get_user_details(db_filename, username, email)
+            if user_details:
+                session['user_id'] = user_details[0]
+                session['username'] = user_details[1]
+                print("Login successful!")
+                return redirect('/')
         else:
+            print("User not found.")
             return render_template('signin.html')
     return render_template('signin.html')
 
