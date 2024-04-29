@@ -184,3 +184,20 @@ def getTopTenPersonalScores(db_filename: str, playerID: int) -> tuple:
     topTen = c.fetchall()
     conn.close()
     return topTen
+
+
+'''
+Author: Seiji Aoyama
+Last Modified: 4/29/2024
+'''
+def check_user_exists(db_filename: str, username: str, email: str) -> bool:
+    conn = sqlite3.connect(db_filename)
+    c = conn.cursor()
+    query = """
+        SELECT * FROM Players
+        WHERE playerName = ? AND playerEmail = ?
+    """
+    c.execute(query, (username, email))
+    result = c.fetchone()
+    conn.close()
+    return result is not None

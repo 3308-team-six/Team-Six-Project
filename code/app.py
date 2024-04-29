@@ -41,7 +41,12 @@ def settings():
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
     if request.method == 'POST':
-        return redirect('/')
+        username = request.form['username']
+        email = request.form['email']
+        if dbAPI.check_user_exists(db_filename, username, email):
+            return redirect('/')
+        else:
+            return render_template('signin.html')
     return render_template('signin.html')
 
 
@@ -49,6 +54,9 @@ def signin():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+        dbAPI.addPlayer(db_filename, username, email)
         return redirect('/')
     return render_template('signup.html')
 
@@ -62,4 +70,6 @@ def signup():
 #     # Add score to myScore table
 
 if __name__ == '__main__':
+    db_filename = 'teamSix.db'
+    dbAPI.create(db_filename)
     app.run(debug=True)
