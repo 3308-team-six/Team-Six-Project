@@ -1,5 +1,5 @@
 from flask import render_template
-from flask import Flask, request
+from flask import Flask, request, redirect
 import dbAPI
 
 app = Flask(__name__)
@@ -37,16 +37,20 @@ def gamerules():
 def settings():
     return render_template('settings.html')
 
-@app.route('/sign-in')
-@app.route('/signin')
+@app.route('/sign-in', methods=['GET', 'POST'])
+@app.route('/signin', methods=['GET', 'POST'])
 def signin():
+    if request.method == 'POST':
+        return redirect('/')
     return render_template('signin.html')
 
 
-@app.route('/sign-up')
-@app.route('/signup')
+@app.route('/sign-up', methods=['GET', 'POST'])
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    return render_template('signin.html')
+    if request.method == 'POST':
+        return redirect('/')
+    return render_template('signup.html')
 
 ## Database part
 
