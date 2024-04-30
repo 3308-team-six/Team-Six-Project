@@ -48,6 +48,12 @@ export class MainScene extends Phaser.Scene {
         });
     }
 
+    // Obtain playerId and playName
+    init() {
+        this.playerId = window.playerData?.playerId;
+        this.playerName = window.playerData?.playerName;
+    }
+
     // This is the preload function in phaser that loads the assets
     preload() {
         // Load images
@@ -84,6 +90,10 @@ export class MainScene extends Phaser.Scene {
 
     // This function sets up the playing field for the game on start
     create() {
+        // Check playerId and playerName
+        console.log('Player ID:', this.playerId);
+        console.log('Player Name:', this.playerName);
+
         this.state = GameState.Playing;
         this.starfield = this.add
             .tileSprite(0, 0, 800, 600, ImageType.Starfield)
@@ -349,6 +359,9 @@ export class MainScene extends Phaser.Scene {
             this.assetManager.gameOver();
             this.state = GameState.GameOver;
             this.player.disableBody(true, true);
+
+            // Add score when the game is over to DB - SA
+            this.scoreManager.addScoreToDB(this.playerId, this.playerName, this.scoreManager.score, new Date().toISOString());
         }
     }
 
