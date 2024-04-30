@@ -319,6 +319,7 @@ export class MainScene extends Phaser.Scene {
         if (live) {
             live.setActive(false).setVisible(false);  // Decrease life
         }
+        this.scoreManager.addScoreToDB(this.playerId, this.playerName, this.scoreManager.score, new Date().toISOString()); // Send score
     }
         
     //This function manages meteor spawning
