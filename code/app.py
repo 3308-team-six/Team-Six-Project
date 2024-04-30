@@ -66,6 +66,10 @@ def signup():
         return redirect('/')
     return render_template('signup.html')
 
+@app.route('/webgame')
+def webgame():
+    return render_template('webgame.html')
+
 ## Database part
 
 #dbName = 'teamSix.db' # Store my local scores

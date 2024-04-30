@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/webgame.css') }}">
+        <title>ADQS | Space Game</title>
+    </head>
+    <body>
+        <header>
+        <p>Phaser Space Game</p>
+        </header>
+        <div class="container">
+            <div class="SpaceGame">
+            <p>Game TS HERE<p>
+                <!-- Session data to implement scores -->
+                <script>
+                    window.playerData = {
+                        playerId: '{{ session["user_id"] }}', 
+                        playerName: '{{ session["username"] }}'
+                    };
+                </script>
+            <script type="module" src="{{ url_for('static', filename='src/game.js') }}"></script>
+            </div>
+        </div>
+        <footer>
+        <p>Created By Team Six</p>
+        </footer>
+    </body>
+    </html>
