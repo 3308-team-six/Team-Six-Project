@@ -81,63 +81,63 @@ This function will connect to the database file given to add a players score to 
 Author(s): Patrick Sharp
 Last Mofdified: 3/29/2024
 """
-def addScore(db_filename: str, playerID: int, playerName:str, score: int):
+# def addScore(db_filename: str, playerID: int, playerName:str, score: int):
     
-    if type(db_filename) is not str or not db_filename:
-        raise ValueError
-    if type(playerID) is not int or playerID <= 0:
-        raise ValueError
-    if type(playerName) is not str or len(playerName) != 3:
-        raise ValueError
-    if type(score) is not int or score <= 0:
-        raise ValueError
+#     if type(db_filename) is not str or not db_filename:
+#         raise ValueError
+#     if type(playerID) is not int or playerID <= 0:
+#         raise ValueError
+#     if type(playerName) is not str or len(playerName) != 3:
+#         raise ValueError
+#     if type(score) is not int or score <= 0:
+#         raise ValueError
     
-    # Grab the date YYYY-MM-DD format
-    date = str(datetime.now())
-    date = date[0:10] 
+#     # Grab the date YYYY-MM-DD format
+#     date = str(datetime.now())
+#     date = date[0:10] 
     
     
-    conn = sqlite3.connect(db_filename)
-    c = conn.cursor()
-    addScores = f"""
-                    INSERT INTO Scores (playerID, playerName, score, date) VALUES
-                    ({playerID},
-                    '{playerName}',
-                    {score},
-                    '{date}'
-                    );
-                """
-    c.execute(addScores)
-    conn.commit()
-    conn.close()
-    return 0
+#     conn = sqlite3.connect(db_filename)
+#     c = conn.cursor()
+#     addScores = f"""
+#                     INSERT INTO Scores (playerID, playerName, score, date) VALUES
+#                     ({playerID},
+#                     '{playerName}',
+#                     {score},
+#                     '{date}'
+#                     );
+#                 """
+#     c.execute(addScores)
+#     conn.commit()
+#     conn.close()
+#     return 0
 
 """
 Author: Seiji Aoyama
 Last Modified: 5/1/2024
 """
 def add_score_to_db(db_filename: str, playerID: int, playerName: str, score: int):
+    try:
+        if type(db_filename) is not str or not db_filename:
+            raise ValueError
+        if type(playerID) is not int or playerID <= 0:
+            raise ValueError
+        if type(playerName) is not str or len(playerName) != 3:
+            raise ValueError
+        if type(score) is not int or score <= 0:
+            raise ValueError
 
-    if type(db_filename) is not str or not db_filename:
-        raise ValueError
-    if type(playerID) is not int or playerID <= 0:
-        raise ValueError
-    if type(playerName) is not str or len(playerName) != 3:
-        raise ValueError
-    if type(score) is not int or score <= 0:
-        raise ValueError
-
-    date = str(datetime.now())
-    date = date[0:10] 
+        date = str(datetime.now())
+        date = date[0:10] 
     
-    with sqlite3.connect(db_filename) as conn:
-        c = conn.cursor()
-        query = "INSERT INTO Scores (playerID, playerName, score, date) VALUES (?, ?, ?, ?);"
-        c.execute(query, (playerID, playerName, score, date))
-        conn.commit()
-
-    return {"message": "Score successfully added", "status": "success"}
-
+        with sqlite3.connect(db_filename) as conn:
+            c = conn.cursor()
+            query = "INSERT INTO Scores (playerID, playerName, score, date) VALUES (?, ?, ?, ?);"
+            c.execute(query, (playerID, playerName, score, date))
+            conn.commit()
+        return {"message": "Score successfully added", "status": "success"}
+    except Exception as e:
+        return {"message": str(e), "status": "error"}
 
 """
 @Parm db_filename: Name of the database file to open or create

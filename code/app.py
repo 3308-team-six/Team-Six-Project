@@ -1,5 +1,5 @@
 from flask import render_template
-from flask import Flask, request, redirect, session, flash, jsonify
+from flask import Flask, request, redirect, session, jsonify
 import dbAPI
 
 app = Flask(__name__)
@@ -79,10 +79,16 @@ def webgame():
 def add_score():
     data = request.get_json()
     try:
-        result = dbAPI.add_score_to_db('teamSix.db', data['playerId'], data['playerName'], data['score'])
+        playerID = int(data['playerID'])
+        playerName = data['playerName']
+        score = int(data['score'])
+
+        result = dbAPI.add_score_to_db('teamSix.db', playerID, playerName, score)
         return jsonify(result), 201
     except Exception as e:
-        return jsonify({"message": str(e), "status": "error"}), 500
+        app.logger.error(f"Failed to add score: {e}")
+        return jsonify({"message": f"Internal Server Error: {str(e)}", "status": "error"}), 500
+
 
 if __name__ == '__main__':
     db_filename = 'teamSix.db'
