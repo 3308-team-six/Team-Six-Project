@@ -32,7 +32,8 @@ def myBestScore():
 @app.route('/leaderboard')
 @app.route('/Leaderboard')
 def leaderboard():
-    return render_template('leaderboard.html')
+    scores = dbAPI.getTopTenScores('teamSix.db')
+    return render_template('leaderboard.html', scores=scores)
 
 @app.route('/gamerules')
 def gamerules():
