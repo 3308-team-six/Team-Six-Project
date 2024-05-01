@@ -27,12 +27,15 @@ export class ScoreManager {
   //   console.log(error);
   // }}
 
-  sendScoreToServer(score: number): void {
+  sendScoreToServer(playerID: number, playerName: string): void {
+    //console.log("Sending score:", this.score);
     const data = {
-        playerId: this.playerId,
-        playerName: this.playerName,
-        score: score,
+        playerID: playerID,
+        playerName: playerName,
+        score: this.score,
     };
+
+    console.log("Sending data:", data);
 
     fetch('/add_score', {
         method: 'POST',
@@ -44,7 +47,7 @@ export class ScoreManager {
     .then(response => response.json())
     .then(data => console.log('Score submitted successfully:', data))
     .catch(error => console.error('Error submitting score:', error));
-}
+  }
 
 
   // checks for a game over
@@ -147,6 +150,7 @@ export class ScoreManager {
   // Awards 10 points per alien killed
   increaseScore(step = 10) {
     this.score += step;
+    // console.log(`Score increased: ${this.score}`);
     this.print();
   }
 

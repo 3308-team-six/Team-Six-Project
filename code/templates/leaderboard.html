@@ -14,13 +14,13 @@
     <table>
         <tr>
             <th>Ranking</th>
-            <th>Player ID</th>
+            <th>Player Name</th>
             <th>Score</th>
         </tr>
         {% for score in scores %}
         <tr>
             <td class='placement'>{{ loop.index }}</td>
-            <td class='player'>{{ score[0] }}</td> <!-- score[0] should be the playerID -->
+            <td class='player'>{{ score[1] }}</td> <!-- score[0] should be the playerID -->
             <td class='score'><span>{{ score[2] }}</span></td> <!-- score[2] should be the score -->
         </tr>
         {% endfor %}

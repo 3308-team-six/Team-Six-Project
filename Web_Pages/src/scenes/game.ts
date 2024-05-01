@@ -48,10 +48,11 @@ export class MainScene extends Phaser.Scene {
         });
     }
 
-    // Obtain playerId and playName
+    // Obtain playerID and playName
     init() {
-        this.playerId = window.playerData?.playerId;
+        this.playerID = window.playerData?.playerID;
         this.playerName = window.playerData?.playerName;
+        console.log(`Initialized with playerID: ${this.playerID} and playerName: ${this.playerName}`);
     }
 
     // This is the preload function in phaser that loads the assets
@@ -90,8 +91,8 @@ export class MainScene extends Phaser.Scene {
 
     // This function sets up the playing field for the game on start
     create() {
-        // Check playerId and playerName
-        console.log('Player ID:', this.playerId);
+        // Check playerID and playerName
+        console.log('Player ID:', this.playerID);
         console.log('Player Name:', this.playerName);
 
         this.state = GameState.Playing;
@@ -318,7 +319,7 @@ export class MainScene extends Phaser.Scene {
         let live: Phaser.GameObjects.Sprite = this.scoreManager.lives.getFirstAlive();
         if (live) {
             live.setActive(false).setVisible(false);  // Decrease life
-            this.sendScoreToServer(this.scoreManager.score); // Send score
+            this.scoreManager.sendScoreToServer(this.playerID, this.playerName); // Send score
         }
     }
         
@@ -355,14 +356,13 @@ export class MainScene extends Phaser.Scene {
         explosion.play(AnimationType.Explosion);
         this.sound.play(SoundType.PlayerKaboom)
         if (this.scoreManager.noMoreLives) {
+            // Add score when the game is over to DB - SA
+            this.scoreManager.sendScoreToServer(this.playerID, this.playerName); // Send score
             this.scoreManager.resetScore();
             this.scoreManager.setGameOverText();
             this.assetManager.gameOver();
             this.state = GameState.GameOver;
             this.player.disableBody(true, true);
-
-            // Add score when the game is over to DB - SA
-            this.sendScoreToServer(this.scoreManager.score); // Send score
         }
     }
 
