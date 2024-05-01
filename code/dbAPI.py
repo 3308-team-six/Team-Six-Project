@@ -173,9 +173,10 @@ def addPlayer(db_filename: str, playerName: str, playerEmail: str) -> int:
                     );
                 """
     c. execute(addPlayer)
+    user_id = c.lastrowid # Obtain user-id
     conn.commit()
     conn.close()
-    return 0
+    return user_id
 
 
 '''

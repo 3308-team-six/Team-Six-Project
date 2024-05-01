@@ -68,8 +68,15 @@ def signup():
     if request.method == 'POST':
         username = request.form['username']
         email = request.form['email']
-        dbAPI.addPlayer(db_filename, username, email)
-        return redirect('/')
+        user_id = dbAPI.addPlayer(db_filename, username, email)
+
+        # Session
+        if user_id:
+            session['user_id'] = user_id
+            session['username'] = username
+            print("Signup successful, user logged in.")
+            return redirect('/')
+
     return render_template('signup.html')
 
 @app.route('/webgame')
