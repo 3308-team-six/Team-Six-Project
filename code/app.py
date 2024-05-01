@@ -1,5 +1,5 @@
 from flask import render_template
-from flask import Flask, request, redirect, session, flash
+from flask import Flask, request, redirect, session, flash, jsonify
 import dbAPI
 
 app = Flask(__name__)
@@ -75,14 +75,14 @@ def signup():
 def webgame():
     return render_template('webgame.html')
 
-## Database part
-
-#dbName = 'teamSix.db' # Store my local scores
-#dbAPI.create(dbName)
-
-# @app.route('/add_score', methods=['POST'])
-# def add_score():
-#     # Add score to myScore table
+@app.route('/add_score', methods=['POST'])
+def add_score():
+    data = request.get_json()
+    try:
+        result = dbAPI.add_score_to_db('teamSix.db', data['playerId'], data['playerName'], data['score'])
+        return jsonify(result), 201
+    except Exception as e:
+        return jsonify({"message": str(e), "status": "error"}), 500
 
 if __name__ == '__main__':
     db_filename = 'teamSix.db'

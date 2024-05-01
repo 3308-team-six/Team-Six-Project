@@ -318,8 +318,8 @@ export class MainScene extends Phaser.Scene {
         let live: Phaser.GameObjects.Sprite = this.scoreManager.lives.getFirstAlive();
         if (live) {
             live.setActive(false).setVisible(false);  // Decrease life
+            this.sendScoreToServer(this.scoreManager.score); // Send score
         }
-        this.scoreManager.addScoreToDB(this.playerId, this.playerName, this.scoreManager.score, new Date().toISOString()); // Send score
     }
         
     //This function manages meteor spawning
@@ -362,7 +362,7 @@ export class MainScene extends Phaser.Scene {
             this.player.disableBody(true, true);
 
             // Add score when the game is over to DB - SA
-            this.scoreManager.addScoreToDB(this.playerId, this.playerName, this.scoreManager.score, new Date().toISOString());
+            this.sendScoreToServer(this.scoreManager.score); // Send score
         }
     }
 

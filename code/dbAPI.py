@@ -112,6 +112,31 @@ def addScore(db_filename: str, playerID: int, playerName:str, score: int):
     conn.close()
     return 0
 
+"""
+Author: Seiji Aoyama
+Last Modified: 5/1/2024
+"""
+def add_score_to_db(db_filename: str, playerID: int, playerName: str, score: int):
+
+    if type(db_filename) is not str or not db_filename:
+        raise ValueError
+    if type(playerID) is not int or playerID <= 0:
+        raise ValueError
+    if type(playerName) is not str or len(playerName) != 3:
+        raise ValueError
+    if type(score) is not int or score <= 0:
+        raise ValueError
+
+    date = str(datetime.now())
+    date = date[0:10] 
+    
+    with sqlite3.connect(db_filename) as conn:
+        c = conn.cursor()
+        query = "INSERT INTO Scores (playerID, playerName, score, date) VALUES (?, ?, ?, ?);"
+        c.execute(query, (playerID, playerName, score, date))
+        conn.commit()
+
+    return {"message": "Score successfully added", "status": "success"}
 
 
 """

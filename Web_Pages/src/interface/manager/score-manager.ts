@@ -9,24 +9,42 @@ export class ScoreManager {
   lives: Phaser.Physics.Arcade.Group;
 
   // This will be the function that inserts the score to our sqlite db (Connects successfully to the db)
-  private addScoreToDB(playerID, playerName, score, date){
-    const sqlite = require("sqlite3") .verbose();
+  // This is trying to process database on client side
+  // private addScoreToDB(playerID, playerName, score, date){
+  //   const sqlite = require("sqlite3") .verbose();
 
-    // Connect to db
-    const db = new sqlite.Database("../../../../code/teamSix.db", sqlite.OPEN_READWRITE, (err)=>{
-      if (err)console.error(err);
-      else console.log("Successfully connected to the database")
-    });
-    try{
-      const sql_statement = 'INSERT INTO Scores (playerID, playerName, score, date) VALUES (?,?,?,?)'
-      db.run(sql_statement, [playerID, playerName, score, date], (err) =>{
-      if(err) console.error(err)
-    });
-    }catch (error){
-    console.log(error);
-    }}
-  
+  //   // Connect to db
+  //   const db = new sqlite.Database("../../../../code/teamSix.db", sqlite.OPEN_READWRITE, (err)=>{
+  //     if (err)console.error(err);
+  //     else console.log("Successfully connected to the database")
+  //   });
+  //   try{
+  //     const sql_statement = 'INSERT INTO Scores (playerID, playerName, score, date) VALUES (?,?,?,?)'
+  //     db.run(sql_statement, [playerID, playerName, score, date], (err) =>{
+  //     if(err) console.error(err)
+  //   });
+  //   }catch (error){
+  //   console.log(error);
+  // }}
 
+  sendScoreToServer(score: number): void {
+    const data = {
+        playerId: this.playerId,
+        playerName: this.playerName,
+        score: score,
+    };
+
+    fetch('/add_score', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => console.log('Score submitted successfully:', data))
+    .catch(error => console.error('Error submitting score:', error));
+}
 
 
   // checks for a game over
