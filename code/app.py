@@ -22,7 +22,12 @@ def index():
 @app.route('/myBestScore')
 @app.route('/mybestscore')
 def myBestScore():
-    return render_template('myBestScore.html')
+    player_id = session.get('user_id')
+    if player_id:
+        scores = dbAPI.getTopTenPersonalScores('teamSix.db', player_id)
+        print(scores)
+        return render_template('myBestScore.html', scores=scores)
+    return render_template('myBestScore.html', scores=[])
 
 @app.route('/leaderboard')
 @app.route('/Leaderboard')
